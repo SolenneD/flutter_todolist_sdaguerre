@@ -22,13 +22,27 @@ class TodoListPage extends StatelessWidget {
               if (state is UninitializedTaskState) {
                 return Text('Unitialized');
               } else if (state is HasValueTaskState) {
-                ListView.builder(
+                return ListView.builder(
                     itemCount: state.tasks.length,
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          Text(state.tasks[index]),
-                        ],
+                      return Container(
+                        margin: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              state.tasks[index],
+                            )
+                          ],
+                        ),
                       );
                     });
               }
@@ -36,13 +50,16 @@ class TodoListPage extends StatelessWidget {
             },
           )),
           Container(height: 32.0),
-          RaisedButton(
-            color: Colors.blueAccent,
-            child: Text('Ajouter une tâche',
-                style: TextStyle(color: Colors.white)),
-            onPressed: () {
-              _goFormScreen(context);
-            },
+          Container(
+            margin: const EdgeInsets.all(20.0),
+            child: RaisedButton(
+              color: Colors.blueAccent,
+              child: Text('Ajouter une tâche',
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              onPressed: () {
+                _goFormScreen(context);
+              },
+            ),
           )
         ],
       ),

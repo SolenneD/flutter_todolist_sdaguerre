@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todolist_sdaguerre/blocs/task/task_bloc.dart';
 import 'package:flutter_todolist_sdaguerre/blocs/task/task_event.dart';
-import 'package:flutter_todolist_sdaguerre/page/home.dart';
 
 class FormScreenPage extends StatefulWidget {
   @override
@@ -25,12 +24,12 @@ class FormScreenState extends State<FormScreenPage> {
 
   Widget _buildName() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Name'),
+      decoration: InputDecoration(labelText: 'Tâche'),
       controller: nameController,
       maxLength: 30,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Name is Required';
+          return 'Pour une meilleure vie, sors de ta zone de confort !';
         }
 
         return null;
@@ -44,7 +43,10 @@ class FormScreenState extends State<FormScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Ajouter une tâche")),
+      appBar: AppBar(
+        title: Text("Ajouter une tâche"),
+        centerTitle: true,
+      ),
       body: Container(
         margin: EdgeInsets.all(24),
         child: Form(
@@ -53,23 +55,26 @@ class FormScreenState extends State<FormScreenPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _buildName(),
-              SizedBox(height: 100),
-              RaisedButton(
-                child: Text(
-                  'Submit',
-                  style: TextStyle(color: Colors.blue, fontSize: 16),
-                ),
-                onPressed: () {
-                  if (!_formKey.currentState.validate()) {
-                    return;
-                  }
-                  BlocProvider.of<TaskBloc>(context)
-                      .add(AddTask(nameController.text));
-                  _formKey.currentState.save();
+              Container(
+                margin: const EdgeInsets.all(20.0),
+                child: RaisedButton(
+                  color: Colors.blueAccent,
+                  child: Text(
+                    'Tu peux le faire !',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  onPressed: () {
+                    if (!_formKey.currentState.validate()) {
+                      return;
+                    }
+                    BlocProvider.of<TaskBloc>(context)
+                        .add(AddTask(nameController.text));
+                    _formKey.currentState.save();
 
-                  print(_name);
-                  _goHomeScreen(context);
-                },
+                    print(_name);
+                    _goHomeScreen(context);
+                  },
+                ),
               )
             ],
           ),
@@ -80,7 +85,5 @@ class FormScreenState extends State<FormScreenPage> {
 }
 
 _goHomeScreen(context) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) {
-    return TodoListPage();
-  }));
+  Navigator.of(context).pop();
 }
