@@ -8,11 +8,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   @override
   Stream<TaskState> mapEventToState(TaskEvent event) async* {
-    TaskRepository noteRepository = TaskRepository();
+    TaskRepository taskRepository = TaskRepository();
 
     if (event is AddTask) {
-      noteRepository.tasks.add(event.task);
-      yield HasValueTaskState(noteRepository.tasks);
+      taskRepository.tasks.add(event.task);
+      yield HasValueTaskState(taskRepository.tasks);
+    } else if (event is DeleteTask) {
+      taskRepository.tasks.removeAt(event.index);
+      yield HasValueTaskState(taskRepository.tasks);
     } else if (event is ResetEvent) {
       yield UninitializedTaskState();
     }

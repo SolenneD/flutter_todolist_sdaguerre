@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todolist_sdaguerre/blocs/task/task_bloc.dart';
+import 'package:flutter_todolist_sdaguerre/blocs/task/task_event.dart';
 import 'package:flutter_todolist_sdaguerre/blocs/task/task_state.dart';
 
 import 'form.dart';
@@ -20,7 +21,7 @@ class TodoListPage extends StatelessWidget {
           Expanded(child: BlocBuilder<TaskBloc, TaskState>(
             builder: (context, state) {
               if (state is UninitializedTaskState) {
-                return Text('Unitialized');
+                return Text('');
               } else if (state is HasValueTaskState) {
                 return ListView.builder(
                     itemCount: state.tasks.length,
@@ -36,11 +37,26 @@ class TodoListPage extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              state.tasks[index],
-                            )
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  state.tasks[index],
+                                ),
+                              ],
+                            ),
+                            RaisedButton(
+                              color: Colors.redAccent,
+                              child: Text('SUP.',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16)),
+                              onPressed: () {
+                                BlocProvider.of<TaskBloc>(context)
+                                    .add(DeleteTask(index));
+                              },
+                            ),
                           ],
                         ),
                       );

@@ -51,32 +51,34 @@ class FormScreenState extends State<FormScreenPage> {
         margin: EdgeInsets.all(24),
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _buildName(),
-              Container(
-                margin: const EdgeInsets.all(20.0),
-                child: RaisedButton(
-                  color: Colors.blueAccent,
-                  child: Text(
-                    'Tu peux le faire !',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  onPressed: () {
-                    if (!_formKey.currentState.validate()) {
-                      return;
-                    }
-                    BlocProvider.of<TaskBloc>(context)
-                        .add(AddTask(nameController.text));
-                    _formKey.currentState.save();
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _buildName(),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  child: RaisedButton(
+                    color: Colors.blueAccent,
+                    child: Text(
+                      'Tu peux le faire !',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    onPressed: () {
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      }
+                      BlocProvider.of<TaskBloc>(context)
+                          .add(AddTask(nameController.text));
+                      _formKey.currentState.save();
 
-                    print(_name);
-                    _goHomeScreen(context);
-                  },
-                ),
-              )
-            ],
+                      print(_name);
+                      _goHomeScreen(context);
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

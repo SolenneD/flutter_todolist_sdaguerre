@@ -5,4 +5,9 @@ class AddTask extends TaskEvent {
   AddTask(this.task);
 }
 
+class DeleteTask extends TaskEvent {
+  int index;
+  DeleteTask(this.index);
+}
+
 class ResetEvent extends TaskEvent {}
